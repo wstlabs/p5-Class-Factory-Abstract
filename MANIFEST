@@ -3,6 +3,7 @@ Changes
 MANIFEST
 README
 lib/Class/Factory/Abstract.pm
+lib/Class/Factory/Dict.pm
 t/00-load.t
 t/manifest.t
 t/pod-coverage.t

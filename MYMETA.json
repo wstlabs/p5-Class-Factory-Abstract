@@ -23,14 +23,18 @@
    "provides" : {
       "Class::Factory::Abstract" : {
          "file" : "lib/Class/Factory/Abstract.pm",
-         "version" : "0.001"
+         "version" : "0.003_001"
+      },
+      "Class::Factory::Dict" : {
+         "file" : "lib/Class/Factory/Dict.pm",
+         "version" : 0
       }
    },
-   "release_status" : "stable",
+   "release_status" : "testing",
    "resources" : {
       "license" : [
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.001"
+   "version" : "0.003_001"
 }
