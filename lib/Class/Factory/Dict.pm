@@ -5,20 +5,10 @@ use Carp qw( confess );
 use Assert::Std qw(:types :class);
 use parent 'Class::Factory::Abstract';
 
-sub new {
-    my ($proto, $args) = @_;
-    my $class = ref ($proto) || $proto;
-    my $it = bless { dict => {} }, $class;
-    $it->initialize($args); 
-    $it
-}
-
 sub initialize  {
-    my ($self, $hash) = @_;
-    # trace4 "hash = ",$hash; 
-    return 1 unless defined $hash;
-    confess "invalid usage" unless ref $hash eq 'HASH';
-    $self->register_all( $hash )
+    my $self = shift;
+    $self->{'dict'} = {};
+    $self->register_all(@_)
 }
 
 # 'hard' accessor; dies if not registered.
@@ -62,10 +52,10 @@ sub unregister  {
 }
 
 sub register_all  {
-    my ($self, $hash) = @_;
+    my $self = shift;
     confess "invalid usage:  odd number of arguments" if @_ % 2;
-    while( my ($key,$val)  = each %$hash)  {
-        $self->register ($key, $val)
+    while (@_)  {
+        $self->register (shift, shift)
     }
 }
 

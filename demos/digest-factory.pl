@@ -7,10 +7,10 @@ use Class::Factory::Dict;
 use Carp;
 use YAML;
 
-our $DF = Class::Factory::Dict->new({
+our $DF = Class::Factory::Dict->new(
     'md5'   => 'Digest::MD5',
     'sha1'  => 'Digest::SHA1'
-});
+);
 
 print "fac = " . Dump $DF; 
 my @keys = $DF->get_keys();

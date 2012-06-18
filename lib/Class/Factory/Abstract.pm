@@ -10,20 +10,21 @@ use Class::Inspector;
 our $VERSION = '0.003_001';
 
 sub new {
-    my ($proto, $args) = @_;
+    my $proto = shift;
     my $class = ref ($proto) || $proto;
     my $inst = bless {}, $class;
-    $inst->initialize; 
+    $inst->initialize(@_);
     $inst
 }
 
-# can be overridden if desired
+# MAY be provided by implementations; defaults to no-op.
 sub initialize {}
 
 #
 #  takes:  @args
 #  returns ($class, @opts)
 #
+# MUST be provided by implementations.
 sub resolve      {  confess "not yet implemented"  }
 
 sub instantiate  {
