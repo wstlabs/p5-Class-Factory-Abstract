@@ -1,10 +1,49 @@
 package Class::Factory::Abstract;
 use warnings;
 use strict;
+use Scalar::Util  qw( reftype );
+use Carp          qw( confess );
+use Assert::Std   qw( :types :class );
+use Module::Load;
+use Class::Inspector;
 
-our $VERSION = '0.001';
+our $VERSION = '0.003_001';
 
-1;
+sub new {
+    my ($proto, $args) = @_;
+    my $class = ref ($proto) || $proto;
+    my $inst = bless {}, $class;
+    $inst->initialize; 
+    $inst
+}
+
+# can be overridden if desired
+sub initialize {}
+
+#
+#  takes:  @args
+#  returns ($class, @opts)
+#
+sub resolve      {  confess "not yet implemented"  }
+
+sub instantiate  {
+    my $self = shift;
+    my ($class, @opts) = $self->resolve(@_);
+    my $inst = $self->produce($class, \@opts);
+    $inst
+}
+
+sub produce  {
+    my $self  = shift;
+    my $class = shift;
+    my $args  = shift // [];
+    assert_valid_package_name($class);
+    assert_array_ref($args);
+    load $class unless Class::Inspector->loaded($class);
+    confess "can't produce:  class '$class' has no 'new' constructor"
+        unless $class->can('new');
+    $class->new(@$args)
+} 
 
 __END__
 
@@ -113,3 +152,4 @@ See http://dev.perl.org/licenses/ for more information.
 =cut
 
 1; # End of Class::Factory::Abstract
+
