@@ -4,6 +4,8 @@ MANIFEST
 README
 lib/Class/Factory/Abstract.pm
 lib/Class/Factory/Dict.pm
+lib/Class/Factory/Dict/Assert.pm
+demos/digest-factory.pl
 t/00-load.t
 t/manifest.t
 t/pod-coverage.t

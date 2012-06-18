@@ -28,6 +28,10 @@
       "Class::Factory::Dict" : {
          "file" : "lib/Class/Factory/Dict.pm",
          "version" : 0
+      },
+      "Class::Factory::Dict::Assert" : {
+         "file" : "lib/Class/Factory/Dict/Assert.pm",
+         "version" : 0
       }
    },
    "release_status" : "testing",

@@ -2,7 +2,8 @@ package Class::Factory::Dict;
 use warnings;
 use strict;
 use Carp qw( confess );
-use Assert::Std qw(:types :class);
+use Assert::Class qw(:all);
+use Class::Factory::Dict::Assert qw(:all);
 use parent 'Class::Factory::Abstract';
 
 sub initialize  {
@@ -28,26 +29,27 @@ sub get_keys  {
 
 # 'soft' accesser; returns undef if not registerd.
 sub get_class  {
-    my ($self, $desc) = @_;
-    _assert_package_descriptor($desc);
+    my $self = shift;
+    my $desc = verify_package_descriptor(shift);
     $self->{dict}->{$desc}
 }
 
 sub has_class  {
-    my ($self, $desc) = @_;
+    my $self = shift;
+    my $desc = verify_package_descriptor(shift);
     defined $self->get_class($desc)
 }
 
 sub register  {
-    my ($self, $desc, $class) = @_;
-    _assert_package_descriptor($desc);
-    assert_valid_package_name($class);
+    my $self  = shift;
+    my $desc  = verify_package_descriptor(shift);
+    my $class = verify_package_name(shift);
     $self->{dict}->{$desc} = $class
 }
 
 sub unregister  {
-    my ($self, $desc) = @_;
-    _assert_package_descriptor($desc);
+    my $self = shift;
+    my $desc = verify_package_descriptor(shift);
     delete $self->{dict}->{$desc}
 }
 
@@ -57,15 +59,6 @@ sub register_all  {
     while (@_)  {
         $self->register (shift, shift)
     }
-}
-
-sub _assert_package_descriptor  {
-    my $desc = shift;
-    confess "need a package descriptor" 
-        unless defined $desc;
-    confess "need a package descriptor" 
-        unless is_scalar($desc);
-    undef
 }
 
 1;

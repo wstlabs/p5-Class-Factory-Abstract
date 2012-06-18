@@ -36,10 +36,8 @@ sub instantiate  {
 
 sub produce  {
     my $self  = shift;
-    my $class = shift;
-    my $args  = shift // [];
-    assert_valid_package_name($class);
-    assert_array_ref($args);
+    my $class = verify_package_name(shift);
+    my $args  = verify_array_ref( shift // [] );
     load $class unless Class::Inspector->loaded($class);
     confess "can't produce:  class '$class' has no 'new' constructor"
         unless $class->can('new');
