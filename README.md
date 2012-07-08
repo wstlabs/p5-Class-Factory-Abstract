@@ -19,7 +19,7 @@ The module itself is an abstract class, meaning by itself it doesn't do anything
   }
 ```
 
-Then down in your application:
+Then down in your app:
 
 ```
   my $factory = My::Widget::Factory->new();
